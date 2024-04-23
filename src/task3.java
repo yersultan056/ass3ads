@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 public class task3 {
     public static void main(String[] args) {
@@ -13,17 +10,18 @@ public class task3 {
             int operationType = scanner.nextInt();
             if (operationType == 1) {
                 int diskNumber = scanner.nextInt();
-                shelf.addFirst(diskNumber - 1); //left
+                shelf.addFirst(diskNumber - 1);
             } else if (operationType == 2) {
                 int diskNumber = scanner.nextInt();
-                shelf.addLast(diskNumber - 1); //right
+                shelf.addLast(diskNumber - 1);
             } else if (operationType == 3) {
-                int removedDisk = shelf.pollFirst(); //remove from left
+                int removedDisk = shelf.pollFirst();
                 System.out.println("3 " + removedDisk);
             } else if (operationType == 4) {
-                int removedDisk = shelf.pollLast(); //remove from right
+                int removedDisk = shelf.pollLast();
                 System.out.println("4 " + removedDisk);
             }
         }
     }
 }
+
