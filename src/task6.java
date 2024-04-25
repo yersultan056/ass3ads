@@ -66,7 +66,7 @@ public class task6 {
 
     public static void main(String[] args) {
         int[] array = {4, 10, 3, 5, 1};
-        boolean isMaxHeap = true; // Change to false for min heap
+        boolean isMaxHeap = true;
         int size = array.length;
 
         heapify(array, size, isMaxHeap);
