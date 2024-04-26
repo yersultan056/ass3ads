@@ -1,75 +1,66 @@
+import java.util.*;
+
 public class task6 {
-    public static void heapify(int[] array, int size, boolean isMaxHeap) {
-        int startIdx = (size / 2) - 1;
 
-        if (isMaxHeap) {
-            for (int i = startIdx; i >= 0; i--) {
-                maxHeapify(array, size, i);
-            }
+    static void heapify(int arr[], int n, int i, String heapType) {
+        int largestOrSmallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (heapType.equals("max")) {
+            if (left < n && arr[left] > arr[largestOrSmallest])
+                largestOrSmallest = left;
+            if (right < n && arr[right] > arr[largestOrSmallest])
+                largestOrSmallest = right;
         } else {
-            for (int i = startIdx; i >= 0; i--) {
-                minHeapify(array, size, i);
+            if (left < n && arr[left] < arr[largestOrSmallest])
+                largestOrSmallest = left;
+            if (right < n && arr[right] < arr[largestOrSmallest])
+                largestOrSmallest = right;
+        }
+
+        if (largestOrSmallest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largestOrSmallest];
+            arr[largestOrSmallest] = swap;
+            heapify(arr, n, largestOrSmallest, heapType);
+        }
+    }
+
+    static void buildHeap(int arr[], int n, String heapType) {
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i, heapType);
+    }
+
+    static void printHeap(int arr[], int n) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);
+        int level = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            System.out.print("Level " + level + ": ");
+            for (int i = 0; i < size; i++) {
+                int idx = q.poll();
+                System.out.print(arr[idx] + " ");
+                int left = 2 * idx + 1;
+                int right = 2 * idx + 2;
+                if (left < n) q.add(left);
+                if (right < n) q.add(right);
             }
+            System.out.println();
+            level++;
         }
     }
 
-    private static void maxHeapify(int[] array, int size, int index) {
-        int largest = index;
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
+    public static void main(String args[]) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter heap type (min or max): ");
+        String heapType = scanner.nextLine();
+        int arr[] = {4, 10, 3, 5, 1};
+        int n = arr.length;
 
-        if (left < size && array[left] > array[largest]) {
-            largest = left;
-        }
-
-        if (right < size && array[right] > array[largest]) {
-            largest = right;
-        }
-
-        if (largest != index) {
-            swap(array, index, largest);
-            maxHeapify(array, size, largest);
-        }
-    }
-
-    private static void minHeapify(int[] array, int size, int index) {
-        int smallest = index;
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
-
-        if (left < size && array[left] < array[smallest]) {
-            smallest = left;
-        }
-
-        if (right < size && array[right] < array[smallest]) {
-            smallest = right;
-        }
-
-        if (smallest != index) {
-            swap(array, index, smallest);
-            minHeapify(array, size, smallest);
-        }
-    }
-
-    private static void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    public static void printArray(int[] array) {
-        for (int num : array) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        int[] array = {4, 10, 3, 5, 1};
-        boolean isMaxHeap = true;
-        int size = array.length;
-
-        heapify(array, size, isMaxHeap);
-        printArray(array);
+        buildHeap(arr, n, heapType);
+        System.out.println("");
+        printHeap(arr, n);
     }
 }
